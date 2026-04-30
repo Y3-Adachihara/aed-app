@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('aed', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('location');
+            $table->string('address');
+            $table->string('description');
             $table->double('latitude');
             $table->double('longitude');
             $table->timestamps();
