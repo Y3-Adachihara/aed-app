@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Aed\IndexPageController;
 
 Route::get('/', function () {
-    return view('index');
+    // ↓でhomeにアクセスしようとすると、自動的にログイン画面にリダイレクトされる…はず。
+    return Route::get
 });
 
 Route::middleware('auth')->group(function () {
@@ -15,8 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('home', IndexPageController::class)
-        ->name('index');
-
+        ->name('home');
     
 });
 
