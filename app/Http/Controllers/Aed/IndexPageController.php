@@ -15,6 +15,6 @@ class IndexPageController extends Controller
         $view_name = "AEDアプリ | ホーム";
         $top_title = "島田市 AED設置場所一覧";
 
-        return view('aed.index', compact('view_title', 'top_title'));
+        return view('aed.index', compact('view_name', 'top_title'));
     }
 }
