@@ -7,7 +7,7 @@ use App\Http\Controllers\Aed\IndexPageController;
 
 Route::get('/', function () {
     // ↓でhomeにアクセスしようとすると、自動的にログイン画面にリダイレクトされる…はず。
-    return Route::get
+    return redirect()->route('home');
 });
 
 Route::middleware('auth')->group(function () {
