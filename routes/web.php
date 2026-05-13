@@ -18,6 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::get('home', IndexPageController::class)
         ->name('home');
     
+    Route::get('userinfo-page', function() {
+        return '現在開発中。待ちやがれ。';
+    })->name('userinfo-page');
+    
 });
 
 require __DIR__.'/auth.php';
