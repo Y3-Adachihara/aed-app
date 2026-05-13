@@ -15,7 +15,7 @@
 <div>
 	<header>
 	    <h1>
-	        <a href="{{ route('userHome-page') }}">AED設置場所案内アプリ</a>
+	        <a href="{{ route('home') }}">AED設置場所案内アプリ</a>
 	    </h1>
 
 	    <p>{{ $user_name }}さん - {{ $view_name }}</p>
