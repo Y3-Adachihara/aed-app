@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('aed', function (Blueprint $table) {
             $table->id();
             $table->string('name');         // 建物や施設の名称
+            $table->string('postcode');     // 郵便番号
             $table->string('prefecture');   // 県
-            $table->stirng('municipality'); // 市町村
-            $table->stirng('address');      // 番地
+            $table->string('municipality'); // 市町村
+            $table->string('address');      // 番地
             $table->string('description');  // 建物内の場所の説明
             $table->double('latitude');     // 緯度
             $table->double('longitude');    // 経度
