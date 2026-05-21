@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('aed', function (Blueprint $table) {
+        Schema::create('aeds', function (Blueprint $table) {
             $table->id();
             $table->string('name');         // 建物や施設の名称
             $table->string('postcode');     // 郵便番号
