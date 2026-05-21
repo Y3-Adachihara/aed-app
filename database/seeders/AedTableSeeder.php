@@ -23,6 +23,9 @@ class AedTableSeeder extends Seeder
             
             Aed::create([
                 'name' => fake()->secondaryAddress(),
+                'postcode' => fake()->postcode(),
+                'prefecture' => fake()->prefecture(),
+                'municipality' => fake()->city(),
                 'address' => fake()->streetAddress(),
                 'description' => fake()->sentence(),
                 'latitude' => $latitude_randNum,
