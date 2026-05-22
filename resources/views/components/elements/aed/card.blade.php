@@ -1,7 +1,7 @@
 @props([
-    'aed' => [],
+    'aed' => null,
 ])
-<div>
+<div class="bg-white shadow p-6">
     <br/>
         <p>{{ $aed->name }}</p>
         <p>{{ $aed->postcode }}</p>
@@ -10,9 +10,9 @@
         <p>{{ $aed->address }}</p>
     <br/>
     @if (auth()->user()->role == 'admin')
-        <button >編集</button>
-        <button >削除</button>
+        <a href="#">編集</a>
+        <a href="#">削除</a>
     @endif
 
-    <button>詳細</button>
+    <a href="#">詳細</a>
 </div>
