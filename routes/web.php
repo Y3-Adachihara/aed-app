@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Aed\IndexPageController;
+use App\Http\Controllers\Aed\AedDetailPageController;
 
 Route::get('/', function () {
     // ↓でhomeにアクセスしようとすると、自動的にログイン画面にリダイレクトされる…はず。
@@ -21,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::get('userinfo-page', function() {
         return '現在開発中。待ちやがれ。';
     })->name('userinfo-page');
+
+    Route::get('aed/detail/{aedId}', AedDetailPageController::class)
+        ->name('aed-detail')->where('aedId', '[0-9]++');
     
 });
 
