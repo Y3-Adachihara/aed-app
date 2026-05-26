@@ -21,7 +21,7 @@
             </a>
         @endif
     </div>
-    <a href="#" class="px-4 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md shadow-sm transition-colors">
+    <a href="{{ route('aed-detail', ['aedId' => $aed->id]) }}" class="px-4 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md shadow-sm transition-colors">
         詳細を見る
     </a>
 </div>
