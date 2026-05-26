@@ -10,7 +10,6 @@
         <p>{{ $aed->latitude }}</p>
         <p>{{ $aed->longitude }}</p>
 
-
         <x-elements.aed.map :latitude="$aed->latitude" :longitude ="$aed->longitude" />
 
         <a href="{{ route('home') }}">戻る</a>

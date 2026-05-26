@@ -1,4 +1,4 @@
-@proos([
+@props([
     'latitude' => null,
     'longitude' => null,
 ])
@@ -7,6 +7,8 @@
 </div>
 
 <script>
+    const lat = '{{ $latitude }}';
+    const lng = '{{ $longitude }}';
     // ここにピン立て処理
-    console.log("マップコンポーネントが読み込まれました。ターゲット座標:", {{ $latitude }}, {{ $longitude }});
+    console.log("マップコンポーネントが読み込まれました。ターゲット座標:", lat, lng);
 </script>
