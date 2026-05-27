@@ -16,7 +16,7 @@
             <a href="#" class="px-3 py-1.5 text-sm font-medium text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
                 編集
             </a>
-            <a href="#" class="px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md transition-colors">
+            <a href="{{ route('aed-delete', ['aedId' => $aed->id]) }}" onclick="return confirm('この設置場所の登録を抹消しますか？') class="px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-md transition-colors">
                 削除
             </a>
         @endif
