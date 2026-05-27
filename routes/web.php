@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Aed\IndexPageController;
 use App\Http\Controllers\Aed\AedDetailPageController;
+use App\Http\Controllers\Aed\DeleteAed\DeleteAedController;
 
 Route::get('/', function () {
     // ↓でhomeにアクセスしようとすると、自動的にログイン画面にリダイレクトされる…はず。
@@ -26,6 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::get('aed/detail/{aedId}', AedDetailPageController::class)
         ->name('aed-detail')->where('aedId', '[0-9]++');
     
+    Route::delete('aed/delete/{aedId}', DeleteAedController::class)
+        ->name('aed-delete')->where('aedId', '[0-9]++');
+
 });
 
 require __DIR__.'/auth.php';
