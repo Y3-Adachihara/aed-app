@@ -16,7 +16,7 @@
             <a href="#" class="px-3 py-1.5 text-sm font-medium text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
                 編集
             </a>
-            <x-elements.form-button :action="route('aed-delete', ['aedId' => $aed->id])" method="DELETE" title="削除" confirm_message="この設置場所の登録を抹消しますか？" />
+            <x-elements.form-button :action="route('aed-delete', ['aedId' => $aed->id])" method="DELETE" title="削除" confirm_message="この設置場所の登録を抹消しますか？" theme='delete'/>
         @endif
     </div>
     <a href="{{ route('aed-detail', ['aedId' => $aed->id]) }}" class="px-4 py-1.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md shadow-sm transition-colors">
