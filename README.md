@@ -1,58 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AED設置場所案内アプリ
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+島田市内のAED（自動体外式除細動器）の設置場所を一覧・詳細・地図で確認し、管理者が情報をメンテナンスできるWebアプリケーションです。Laravelで制作したTodoアプリの経験を基に、以前に開発を試みたAED地図案内アプリを機能縮小・部分実装する形で開発を進めることにしています。
 
-## About Laravel
+現在、基本機能の構築およびコンポーネントによるUIのモダン化を進めています。また、将来的には、地図案内機能のみをNode.JSで分離して実装し、本来の目的であった地図案内の機能を実装することを考えております。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ 技術スタック
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** PHP 8.x / Laravel 11.x
+- **Frontend:** Blade / Tailwind CSS
+- **Database:** MySQL
+- **Environment:** Laravel Sail (Docker) / WSL2
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📈 開発進捗・実装ステータス
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🟢 実装済み（動作確認完了）
+- **認証機能:** ログイン/ログアウト機能、ユーザー種別（Admin/一般）の判別
+- **ホーム画面:** AED設置場所のカード型一覧表示
+- **詳細画面:** 個別のAED情報の詳細参照、一覧への遷移
+- **共通コンポーネント化:** - レイアウト共通ヘッダー（ナビゲーションバー）
+  - 汎用フォーム送信ボタン（`DELETE`/`PUT` 等のメソッド・デザインテーマ切り替え対応）
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 🟡 実装中 / 準備中
+- **データ削除機能:** 管理者用削除ボタンのコンポーネント化（処理ロジック接続中）
+- **地図連携機能:** Google Maps Platform API を用いたピン表示（アカウント復元待ち、フロント枠組みは構築済）
+- **編集機能:** AED情報の更新フォームおよび処理
+- **編集機能:** AED情報の登録フォームおよび処理
+- **AED設置場所の本データ挿入:** 静岡県島田市のオープンデータ（CSV）を基に、設置情報を挿入
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🖼️ 画面イメージ
 
-```bash
-composer require laravel/boost --dev
+### 1. ログイン画面
+Laravel Breezeをインストールし、認証基盤を構築しております。
+<img width="1920" height="1020" alt="スクリーンショット 2026-05-31 090128" src="https://github.com/user-attachments/assets/3108cac9-b5b4-466f-84db-6800b80fca27" />
 
-php artisan boost:install
-```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. ホーム画面（一覧表示）
+管理者としてログインすると、AED設置場所のカード一覧に加え、「編集」「削除」ボタンが表示されます。
+一般ユーザの場合は、「詳細」ボタンのみの表示になります。
+<img width="1920" height="1020" alt="スクリーンショット 2026-05-31 090248" src="https://github.com/user-attachments/assets/f0fa94ce-f7e9-4249-88b8-b6e1c77ae901" />
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. 詳細画面
+まだ実装中です。GoogleMap上にピンを指し、場所を示すことを最低要件としています。
+<img width="1920" height="1020" alt="スクリーンショット 2026-05-31 090302" src="https://github.com/user-attachments/assets/0ce3f2cb-bb74-4240-a19d-17ccc8baa213" />
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 💡 開発における「こだわり」と学習ポイント
 
-## Security Vulnerabilities
+過去のWebアプリケーション（Todoアプリ等）開発での反省や経験を活かし、今回の開発では特に以下の点にこだわって実装を進めています。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 1. 単なる「見た目」に留まらないモダンなデザインとUIの共通化
+Tailwind CSSを活用し、シンプルで洗練されたカード型UIやヘッダーナビゲーションを構築しました。
+これらをLaravelの**Bladeコンポーネント（`x-elements` 等）**として切り分けることで、可読性の高い、スッキリとしたHTML構造を実現しています。
 
-## License
+### 2. 再利用性と堅牢性を意識したコンポーネント設計
+削除ボタンの実装にあたり、`<a>` タグによる安易な `GET` リクエストを避け、セキュリティ（CSRF対策・適切なHTTPメソッドの利用）に配慮した汎用的な `<form>` ボタンコンポーネントを自作しました。
+引数（`@props`）として `action`, `method`, `theme` を受け取る設計にすることで、AEDの削除だけでなく、今後の編集機能（`PUT`）や他のエンティティでもそのまま使い回せる「資産」としてのコードを意識しています。
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 3. トラブルに直面した際の確実なデバッグ力
+URLによるキャッシュの問題や、`make:controller` 時の名前空間の仕様（ドットとスラッシュの挙動の違い）など、開発中に発生したエラーに対して、原因をログや挙動から論理的に推測し、一歩一歩確実に解決しながら進めています。
