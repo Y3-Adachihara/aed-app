@@ -15,6 +15,6 @@ class EditAedPageContoller extends Controller
 
         $view_name = "AEDアプリ | 詳細";
 
-        return view('aed.edit', compact('view_name', 'top_title', 'aed'));
+        return view('aed-edit', compact('view_name', 'top_title', 'aed'));
     }
 }
