@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Aed\IndexPageController;
 use App\Http\Controllers\Aed\AedDetailPageController;
 use App\Http\Controllers\Aed\DeleteAed\DeleteAedController;
+use App\Http\Controllers\Aed\EditAed\EditAedPageController;
 
 Route::get('/', function () {
     // ↓でhomeにアクセスしようとすると、自動的にログイン画面にリダイレクトされる…はず。
@@ -20,15 +21,22 @@ Route::middleware('auth')->group(function () {
     Route::get('home', IndexPageController::class)
         ->name('home');
     
+    // ユーザ情報参照画面表示
     Route::get('userinfo-page', function() {
         return '現在開発中。待ちやがれ。';
     })->name('userinfo-page');
 
+    // AED詳細画面表示
     Route::get('aed/detail/{aedId}', AedDetailPageController::class)
         ->name('aed-detail')->where('aedId', '[0-9]++');
     
+    // 削除処理コントローラ呼び出し
     Route::delete('aed/delete/{aedId}', DeleteAedController::class)
         ->name('aed-delete')->where('aedId', '[0-9]++');
+
+    // 編集画面表示
+    Route::get('aed/edit/{aedId}', EditAedPageController::class)
+        ->name('aed-edit')->where('aedId', '[0-9]++');
 
 });
 
