@@ -18,6 +18,8 @@
     @method($method)    {{-- method()の中は、自動的にphpと解釈される --}}
     @csrf
     
+    {{ $slot }}
+    
     <button type="submit" class="{{ $baseClass }} {{ $themeClass }}">
         {{ $title }}
     </button>
