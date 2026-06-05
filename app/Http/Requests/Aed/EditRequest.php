@@ -40,15 +40,21 @@ class EditRequest extends FormRequest
     {
         return [
             'name.required' => '施設名は必ず入力してください。',
+            'name.max' => '施設名は100文字以内で入力してください。',
             'postcode.required' => '郵便番号は必ず入力してください。',
             'postcode.regex' => '郵便番号はハイフンなしの7桁で入力してください。',
             'prefecture.required' => '県名は必ず入力してください。',
+            'prefecture.max' => '県名は10文字以内で入力してください。',
             'municipality.required' => '市町村名は必ず入力してください。',
+            'municipality.max' => '市町村名は20文字以内で入力してください。',
             'address.required' => '番地は必ず入力してください。',
+            'address.max' => '番地は100文字以内で入力してください。',
             'description.max' => '説明文は255文字以内で入力してください。',
             'latitude.required' => '緯度は必ず入力してください。',
+            'latitude.numeric' => '緯度は数値で入力してください。',
             'latitude.between' => '緯度は-90〜90の範囲で指定してください。',
             'longitude.required' => '経度は必ず入力してください。',
+            'longitude.numeric' => '経度は数値で入力してください。',
             'longitude.between' => '経度は-180〜180の範囲で指定してください。',
         ];
     }
