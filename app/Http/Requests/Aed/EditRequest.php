@@ -40,13 +40,54 @@ class EditRequest extends FormRequest
     {
         return [
             'name.required' => '施設名は必ず入力してください。',
-            'postcode' => '郵便番号はハイフンなしの7桁で入力してください。',
-            'prefecture' => '県名は必ず入力してください',
-            'municipality' => '市町村名は必ず入力してください',
-            'address' => '番地は必ず入力してください',
-            'description' => '文字数制限は255字です。',
-            'latitude' => '緯度は-90~90（北緯90度~南緯90度）の範囲で指定してください',
-            'longitude' => '経度は-180~180（西経180度~東経180度）の範囲で指定してください',
+            'postcode.required' => '郵便番号は必ず入力してください。',
+            'postcode.regex' => '郵便番号はハイフンなしの7桁で入力してください。',
+            'prefecture.required' => '県名は必ず入力してください。',
+            'municipality.required' => '市町村名は必ず入力してください。',
+            'address.required' => '番地は必ず入力してください。',
+            'description.max' => '説明文は255文字以内で入力してください。',
+            'latitude.required' => '緯度は必ず入力してください。',
+            'latitude.between' => '緯度は-90〜90の範囲で指定してください。',
+            'longitude.required' => '経度は必ず入力してください。',
+            'longitude.between' => '経度は-180〜180の範囲で指定してください。',
         ];
-    }    
+    }
+
+    public function aedId(): int {
+        return (int) $this->route('aedId');
+    }
+
+    public function name(): string {
+        return $this->input('name');
+    }
+
+    public function postcode(): string {
+        return $this->input('postcode');
+    }
+
+    public function prefecture(): string {
+        return $this->input('prefecture');
+    }
+
+    public function municipality(): string {
+        return $this->input('municipality');
+    }
+
+    public function address(): string {
+        return $this->input('address');
+    }
+
+    public function description(): string {
+        
+        return $this->filled('description') ? $this->input('description'): '';
+    }
+
+    public function latitude(): float {
+        return (float) $this->input('latitude');
+    }
+
+    public function longitude(): float {
+        return (float) $this->input('longitude');
+    }
+
 }
