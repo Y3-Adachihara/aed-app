@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Aed\EditRequest;
 use App\Models\Aed;
 
-class EditAedPageController extends Controller
+class EditAedController extends Controller
 {
     public function __invoke(EditRequest $request)
     {
