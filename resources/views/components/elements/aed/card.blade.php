@@ -13,7 +13,7 @@
     </div>
     <div class="flex items-center justify-end space-x-2 pt-4 border-t border-gray-100">
         @if (auth()->user()->role == 'admin')
-            <a href="{{ route('aed-edit', ['aedId' => $aed->id]) }}" class="px-3 py-1.5 text-sm font-medium text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
+            <a href="{{ route('aed-edit-page', ['aedId' => $aed->id]) }}" class="px-3 py-1.5 text-sm font-medium text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
                 編集
             </a>
             <x-elements.form-button :action="route('aed-delete', ['aedId' => $aed->id])" method="DELETE" title="削除" confirm_message="この設置場所の登録を抹消しますか？" theme='delete'/>
