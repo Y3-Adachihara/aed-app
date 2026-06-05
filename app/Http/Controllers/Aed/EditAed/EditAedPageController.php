@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Aed;
 
-class EditAedPageContoller extends Controller
+class EditAedPageController extends Controller
 {
     public function __invoke(Request $request, $aedId)
     {
