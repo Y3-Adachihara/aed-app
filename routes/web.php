@@ -7,6 +7,7 @@ use App\Http\Controllers\Aed\IndexPageController;
 use App\Http\Controllers\Aed\AedDetailPageController;
 use App\Http\Controllers\Aed\DeleteAed\DeleteAedController;
 use App\Http\Controllers\Aed\EditAed\EditAedPageController;
+use App\Http\Controllers\Aed\EditAed\EditAedController;
 
 Route::get('/', function () {
     // ↓でhomeにアクセスしようとすると、自動的にログイン画面にリダイレクトされる…はず。
@@ -35,7 +36,11 @@ Route::middleware('auth')->group(function () {
         ->name('aed-delete')->where('aedId', '[0-9]++');
 
     // 編集画面表示
-    Route::get('aed/edit/{aedId}', EditAedPageController::class)
+    Route::get('aed/edit-page/{aedId}', EditAedPageController::class)
+        ->name('aed-edit-page')->where('aedId', '[0-9]++');
+
+    // 編集処理コントローラ呼び出し
+    Route::put('aed/edit/{aedId}', EditAedController::class)
         ->name('aed-edit')->where('aedId', '[0-9]++');
 
 });
