@@ -5,7 +5,7 @@
 ])
 <x-layout.layout>
     <x-layout.layout-header view_name="{{ $view_name }}" top_title="{{ $top_title }}">
-        <x-elements.form-button action="#" method="PUT" title="変更を保存する" confirm_message="この内容で確定しますか？" theme="edit">
+        <x-elements.form-button action="{{ route('aed-edit', ['todoId' => $aed->todoId]) }}" method="PUT" title="変更を保存する" confirm_message="この内容で確定しますか？" theme="edit">
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">施設名</label>
