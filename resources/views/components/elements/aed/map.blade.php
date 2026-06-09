@@ -18,6 +18,11 @@
 
         const mapDiv = document.getElementById('map');
         const map = new google.maps.Map(mapDiv, mapOptions);
+
+        new google.maps.Marker({
+            position: { lat: parseFloat(lat), lng: parseFloat(lng) }, // ピンを立てる座標
+            map: map // 💡 上で作った「map」の変数と合体させる
+        });
     }
 
     console.log("マップコンポーネントが読み込まれました。ターゲット座標:", lat, lng);
