@@ -18,7 +18,7 @@ class TestGeocodingCommand extends Command
         $this->info('--- CSV中身取得実験を開始します ---');
 
         // 1-a. 島田市のデータセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
-        // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=8f9aacc5-4c06-4803-acbe-5452b98b6f9c';
+        $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=8f9aacc5-4c06-4803-acbe-5452b98b6f9c';
 
         // 1-b. 焼津市のデータセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=e5f81371-ca06-4f6e-af7b-0dd1e853494f';
@@ -36,7 +36,7 @@ class TestGeocodingCommand extends Command
 
         // 1-c. 牧之原市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
         // 元からUTF-8
-        $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=f5349248-b2fb-4468-8b67-847de96d68eb';
+        // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=f5349248-b2fb-4468-8b67-847de96d68eb';
 
         // 1-c. 浜松市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=f70e5a59-5d61-4009-9024-1bc40879c662';
@@ -88,13 +88,41 @@ class TestGeocodingCommand extends Command
             // 🔥 4. 【実務の裏技】UTF-8の先頭に付くことがある見えないゴミ（BOM）を削除
             $csvUtf8Text = preg_replace('/^\xEF\xBB\xBF/', '', $csvUtf8Text);
 
-            $this->info('判定された文字コード: ' . $encoding);
-            $this->info('==================== CSVの中身（ここから） ====================');
+            // =================================================================
+            // 🔥 ここからCSV解析処理の追加
+            // =================================================================
             
-            // 💡 最初の2000文字を表示
-            $this->line(mb_substr($csvUtf8Text, 0, 2000));
+            // 1. テキストを「改行」で区切って、1行ずつの配列にする
+            // 💡 Windows(\r\n)とLinux(\n)の両方の改行コードに対応する正規表現です
+            $lines = preg_split('/\r\n|\r|\n/', $csvUtf8Text);
             
-            $this->info('==================== CSVの中身（ここまで） ====================');
+            // 空の行（一番最後など）を除去
+            $lines = array_filter($lines);
+
+            // 2. 一番先頭の行（ヘッダー・項目名）を取り出す
+            $firstLine = array_shift($lines);
+            $headers = str_getcsv($firstLine); // ['名称', '名称(英語)', '設置場所', ...] となる
+
+            // 3. 残りの行（データ）をループして、ヘッダーと合体させて連想配列を作る
+            $parsedRows = [];
+            foreach ($lines as $line) {
+                // 1行の文字列を、カンマで区切って配列にする
+                $rowValues = str_getcsv($line);
+                
+                // ヘッダーの数とデータの数が一致しているかチェック（念のため）
+                if (count($headers) === count($rowValues)) {
+                    // 💡 array_combine が超強力！
+                    // ヘッダーの配列（鍵）と、データの配列（値）を合体させて連想配列を作ってくれる！
+                    $parsedRows[] = array_combine($headers, $rowValues);
+                }
+            }
+
+            // 4. 解析結果の最初の2件だけをお試しでダンプ表示してみる！
+            $this->info('==================== 解析後のデータ（最初の2件） ====================');
+            dump(array_slice($parsedRows, 0, 2));
+            $this->info('===================================================================');
+            
+            $this->info('総データ件数: ' . count($parsedRows) . ' 件');
             $this->info('--- 実験成功！ ---');
 
         } else {
