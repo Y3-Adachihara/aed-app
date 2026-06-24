@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminUserSeeder::class,
             AedTableSeeder::class,
+            CsvMappingSeeder::class,
         ]);
     }
 }
