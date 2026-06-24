@@ -64,5 +64,8 @@ class CsvMappingSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ];
+
+        // 💡 一気にデータベースへ保存！
+        DB::table('csv_mappings')->insert($mappings);
     }
 }
