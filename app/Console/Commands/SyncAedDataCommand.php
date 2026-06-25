@@ -81,6 +81,48 @@ class SyncAedDataCommand extends Command
                 }
 
                 $this->comment("📥 本命CSVをダウンロード中: {$csvUrl}");
+
+
+                // ----------------------------------------------------------------
+                // 💡 ステップ2: CSVのダウンロードと文字化け解消（テストの引っ越し）
+                // ----------------------------------------------------------------
+                $csvResponse = Http::timeout(30)->get($csvUrl);
+                if ($csvResponse->failed()) {
+                    $this->error("❌ CSVのダウンロードに失敗しました。");
+                    continue;
+                }
+
+                $rawBody = $csvResponse->body();
+
+                // 🌟 テストで大活躍した「文字コード自動判定＆変換」の処理
+                $currentEncoding = mb_detect_encoding($rawBody, ['UTF-8', 'SJIS-win', 'SJIS', 'EUC-JP'], true);
+                if ($currentEncoding !== 'UTF-8') {
+                    $rawBody = mb_convert_encoding($rawBody, 'UTF-8', $currentEncoding);
+                }
+
+                // 🌟 テストで大活躍した「BOM（割れ文字）削除」の処理
+                $rawBody = preg_replace('/^\xEF\xBB\xBF/', '', $rawBody);
+
+                // 文字列を「行」に分解
+                $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $rawBody));
+                
+                // ヘッダー行（1行目）を取得して、空行を除外するためのクレンジング
+                $header = str_getcsv(array_shift($lines));
+                
+                // データ行をループして解析
+                $parsedRows = [];
+                foreach ($lines as $line) {
+                    if (empty(trim($line))) continue; // 空行はパス
+                    
+                    $row = str_getcsv($line);
+                    if (count($header) !== count($row)) continue; // 列数が合わない行はパス
+                    
+                    $parsedRows[] = array_combine($header, $row);
+                }
+
+                $this->info("📊 CSVの解析完了！レコード数: " . count($parsedRows) . " 件");
+
+                // 【次回、ここにステップ3: データベースへの保存ロジックを追加します！】
                 
             } catch (\Exception $e) {
                 $this->error("❌ 予期せぬエラーが発生しました: " . $e->getMessage());
