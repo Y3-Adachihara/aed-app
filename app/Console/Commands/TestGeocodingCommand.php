@@ -17,28 +17,28 @@ class TestGeocodingCommand extends Command
     {
         $this->info('--- CSV中身取得実験を開始します ---');
 
-        // 1-a. 島田市のデータセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-a. 島田市のデータセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=8f9aacc5-4c06-4803-acbe-5452b98b6f9c';
 
-        // 1-b. 焼津市のデータセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-b. 焼津市のデータセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=e5f81371-ca06-4f6e-af7b-0dd1e853494f';
 
-        // 1-c. 藤枝市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-c. 藤枝市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         // 元からUTF-8
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=5e3017d5-eaa2-4355-a6a8-b51926b43dbb';
 
-        // 1-c. 静岡市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-c. 静岡市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=dd1347a8-60e9-4781-8dbe-7614924f945e';
 
-        // 1-c. 川根本町データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-c. 川根本町データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         // 元からUTF-8
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=e504fef5-2762-41da-ad8d-08b93c7f7ae7';
 
-        // 1-c. 牧之原市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-c. 牧之原市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         // 元からUTF-8
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=f5349248-b2fb-4468-8b67-847de96d68eb';
 
-        // 1-c. 浜松市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定）
+        // 1-c. 浜松市データセット情報を取得（実験ではシラサギAPIを使用　本番はCKAN APIを使用予定 ← 訂正。シラサギAPIヲ引き続き使用(2026-06-25)）
         // $apiUrl = 'https://opendata.pref.shizuoka.jp/api/package_show?id=f70e5a59-5d61-4009-9024-1bc40879c662';
 
         $apiResponse = Http::get($apiUrl);
