@@ -51,7 +51,37 @@ class SyncAedDataCommand extends Command
                 // 現段階では、ちゃんとAPIの接続までループが回っているか確認するためのログ
                 $this->info("✅ APIへの接続に成功しました！");
                 
-                // 【ここに、次回以降CSVダウンロードや解析、保存のロジックを追加していきます】
+
+                // ----------------------------------------------------------------
+                // 💡 ステップ1: APIのJSONからCSVのダウンロードURLを見つける（修正版）
+                // ----------------------------------------------------------------
+                $data = $response->json();
+                $csvUrl = null;
+
+                if (isset($data['result']['resources'])) {
+                    foreach ($data['result']['resources'] as $resource) {
+                        // 1. まずはCSVファイルかどうかを判定
+                        $isCsv = str_ends_with(strtolower($resource['url']), '.csv') || strtolower($resource['format'] ?? '') === 'csv';
+                        
+                        // 🌟 ユーザーさん大正格！「H29年度」などの古いデータを含まないか判定
+                        $resourceName = $resource['name'] ?? '';
+                        $isNotOldData = !str_contains($resourceName, 'H29年度');
+
+                        // 両方の条件を満たしたものだけを「本命」として採用！
+                        if ($isCsv && $isNotOldData) {
+                            $csvUrl = $resource['url'];
+                            break;
+                        }
+                    }
+                }
+
+                if (!$csvUrl) {
+                    $this->error("❌ 本命のCSVファイルのURLが見つかりませんでした。");
+                    continue;
+                }
+
+                $this->comment("📥 本命CSVをダウンロード中: {$csvUrl}");
+                
             } catch (\Exception $e) {
                 $this->error("❌ 予期せぬエラーが発生しました: " . $e->getMessage());
                 continue;
