@@ -18,6 +18,9 @@ return new class extends Migration
             $blueprint->string('municipality_code')->unique(); // 自治体コード（例: 222097 ※焼津市）
             $blueprint->string('municipality_name');           // 自治体名（例: 焼津市）
 
+            // 💡 ここを追加！自治体ごとのオープンデータセットIDを保存
+            $blueprint->string('dataset_id');
+
             // 💡 ここに入力するのは「施設名」そのものではなく、「CSVの列名（例: '名称' や '施設名'）」です
             $blueprint->string('name_column');                 // 名称が格納されているCSVの列名
             
