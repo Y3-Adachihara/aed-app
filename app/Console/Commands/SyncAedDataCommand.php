@@ -7,6 +7,7 @@ use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use App\Models\Aed;
 
 #[Signature('sync:aed')]
 #[Description('各自治体のオープンデータ（AED）を自動ダウンロードしてデータベースを同期します')]
@@ -122,7 +123,62 @@ class SyncAedDataCommand extends Command
 
                 $this->info("📊 CSVの解析完了！レコード数: " . count($parsedRows) . " 件");
 
-                // 【次回、ここにステップ3: データベースへの保存ロジックを追加します！】
+                // ----------------------------------------------------------------
+                // 💡 ステップ3: 指示書を使ってデータを整形し、aedsテーブルへ保存
+                // ----------------------------------------------------------------
+                $this->comment("💾 データベースへ同期中...");
+                $successCount = 0;
+
+                foreach ($parsedRows as $row) {
+                    // ① 施設名（名称）の取得
+                    $name = $row[$mapping->name_column] ?? null;
+                    if (!$name) continue; // 名前がないデータはスキップ
+
+                    // ② 住所のガッチャンコ処理（カンマ区切りに対応）
+                    $addressParts = explode(',', $mapping->address_columns);
+                    $fullAddress = '';
+                    foreach ($addressParts as $part) {
+                        $fullAddress .= $row[trim($part)] ?? '';
+                    }
+
+                    // ③ 緯度・経度の取得（nullが許可されている場合は、そのままnullを入れる）
+                    $latitude = $mapping->latitude_column ? ($row[$mapping->latitude_column] ?? null) : null;
+                    $longitude = $mapping->longitude_column ? ($row[$mapping->longitude_column] ?? null) : null;
+
+                    // ④ 説明文（設置場所や備考など）のガッチャンコ処理
+                    $description = '';
+                    if ($mapping->description_columns) {
+                        $descParts = explode(',', $mapping->description_columns);
+                        $descList = [];
+                        foreach ($descParts as $part) {
+                            $trimmedPart = trim($part);
+                            if (!empty($row[$trimmedPart])) {
+                                // 「設置位置: ○○階」のような形で見やすく組み立てる
+                                $descList[] = "【{$trimmedPart}】: " . $row[$trimmedPart];
+                            }
+                        }
+                        $description = implode("\n", $descList);
+                    }
+
+                    // ⑤ 🌟 重複を防ぎながらデータベースへ保存・更新！
+                    // 「自治体コード」と「施設名」と「住所」が完全に一致するデータがあれば上書き、なければ新規登録
+                    Aed::updateOrCreate(
+                        [
+                            'municipality_code' => $mapping->municipality_code,
+                            'name' => $name,
+                            'address' => $fullAddress,
+                        ],
+                        [
+                            'latitude' => $latitude,
+                            'longitude' => $longitude,
+                            'description' => $description,
+                        ]
+                    );
+
+                    $successCount++;
+                }
+
+                $this->info("✨ 【{$mapping->municipality_name}】のデータを {$successCount} 件 同期しました！");
                 
             } catch (\Exception $e) {
                 $this->error("❌ 予期せぬエラーが発生しました: " . $e->getMessage());
