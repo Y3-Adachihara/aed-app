@@ -13,15 +13,22 @@ return new class extends Migration
     {
         Schema::create('aeds', function (Blueprint $table) {
             $table->id();
-            $table->string('name');         // 建物や施設の名称
-            $table->string('postcode');     // 郵便番号
-            $table->string('prefecture');   // 県
-            $table->string('municipality'); // 市町村
-            $table->string('address');      // 番地
-            $table->string('description');  // 建物内の場所の説明
-            $table->double('latitude');     // 緯度
-            $table->double('longitude');    // 経度
+            $table->string('municipality_code'); // 💡 ①案2: 自治体コードカラムを追加！
+            $table->string('name');              // 施設名は必須（Not Null）
+            
+            // 💡 ③対策: 不備のあるデータでもクラッシュしないよう、nullable() を一斉付与！
+            $table->string('postcode')->nullable();
+            $table->string('prefecture')->nullable();
+            $table->string('municipality')->nullable();
+            $table->string('address')->nullable(); // ここは「番地」のみが入る
+            $table->text('description')->nullable(); // 文字数が増えてもいいように string から text に変更
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
+            
             $table->timestamps();
+
+            // 💡 データベースの検索を高速化し、重複を防ぐためのインデックス設定
+            $table->unique(['municipality_code', 'name', 'address'], 'aeds_unique_index');
         });
     }
 
